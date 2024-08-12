@@ -1,0 +1,23 @@
+<% if current_user.rated_notice?(@notice) %>
+  <div class="btn btn-secondary me-2 btn-disabled">
+    <span class="d-lg-flex d-none"> Ați acordat deja </span> <%= current_user.rating_for_notice(@notice).rating %> <i class="fa fa-star text-warning"></i>  stele.
+  </div>
+<% else %>
+  <%= form_with(model: [ @notice, Rating.new ]) do |form| %>
+    <div class="form-group me-2" data-controller="rating">
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="ratingDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Selectează un Rating
+        </button>
+        <div class="dropdown-menu" aria-labelledby="ratingDropdown">
+          <%= form.hidden_field :rating, id: 'rating_input' %>
+          <%= form.button content_tag(:i, '', class: 'fa fa-star text-warning'), type: 'button', value: '1', class: 'dropdown-item rating-btn' %>
+          <%= form.button content_tag(:i, '', class: 'fa fa-star text-warning') + content_tag(:i, '', class: 'fa fa-star text-warning'), type: 'button', value: '2', class: 'dropdown-item rating-btn' %>
+          <%= form.button content_tag(:i, '', class: 'fa fa-star text-warning') + content_tag(:i, '', class: 'fa fa-star text-warning') + content_tag(:i, '', class: 'fa fa-star text-warning'), type: 'button', value: '3', class: 'dropdown-item rating-btn' %>
+          <%= form.button content_tag(:i, '', class: 'fa fa-star text-warning') + content_tag(:i, '', class: 'fa fa-star text-warning') + content_tag(:i, '', class: 'fa fa-star text-warning') + content_tag(:i, '', class: 'fa fa-star text-warning'), type: 'button', value: '4', class: 'dropdown-item rating-btn' %>
+          <%= form.button content_tag(:i, '', class: 'fa fa-star text-warning') + content_tag(:i, '', class: 'fa fa-star text-warning') + content_tag(:i, '', class: 'fa fa-star text-warning') + content_tag(:i, '', class: 'fa fa-star text-warning') + content_tag(:i, '', class: 'fa fa-star text-warning'), type: 'button', value: '5', class: 'dropdown-item rating-btn' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>

@@ -1,0 +1,46 @@
+<div class="row" id="notice_validation_container">
+  <div class="col-lg-8 offset-lg-2">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="mt-4">Validare date anunț</h2>
+        <ul class="simple_wizard ps-0">
+          <li class="wizard_step active">1</li>
+          <li class="wizard_line"></li>
+          <li class="wizard_step active">2</li>
+          <li class="wizard_line"></li>
+          <li class="wizard_step">3</li>
+        </ul>
+      </div>
+      <div class="card-body">
+        <%= render partial: 'preview' %>
+
+        <%= form_with(model: [:create_validation, @notice], local: true, ) do |form| %>
+            <h3>Date facturare</h3>
+            <p>Factura pentru publicarea anunțului va fi trimisă pe email:</p>
+            <div class='mb-3 form-check'>
+              <%= form.radio_button :invoiceable_gid, current_user.to_global_id, class: 'form-check-input' %>
+              <%= form.label :"invoiceable_gid_#{current_user.to_global_id}", "Persoană fizică ( #{current_user.name} )", class: 'form-check-label' %>
+            </div>
+
+            <% current_user.organizations.each do |organization| %>
+              <div class='mb-3 form-check'>
+                <%= form.radio_button :invoiceable_gid, organization.to_global_id, class: 'form-check-input' %>
+                <%= form.label :invoiceable_gid, "Persoană juridica ( #{organization.name} )", class: 'form-check-label', value: organization.to_global_id %>
+              </div>
+            <% end %>
+
+          <div class="mb-3 row">
+            <div class="col-6">
+              <%= link_to 'Anulează', root_path, class: "btn btn-outline-primary" %>
+            <%= link_to 'Înapoi', [:edit, @notice], class: "btn btn-outline-primary" %>
+            </div>
+            <div class="col-6 text-end">
+              <%= form.submit 'Continuă', class: 'btn btn-primary' %>
+            </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

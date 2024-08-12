@@ -1,0 +1,53 @@
+<%= fields_for user do |f| %>
+  <%= f.fields_for :user_organizations, user_organization do |user_org| %>
+    <%= user_org.fields_for :organization, organization do |org_f| %>
+      <div class="card-header border-bottom-0 text-uppercase mb-3">Date companie</div>
+      <div class="card-body">
+        <%= org_f.hidden_field :role %>
+
+        <div class="row mb-3">
+          <%= org_f.label :fiscal_code, class: 'col-sm-3 col-form-label' %>
+          <div class="col-sm-9">
+            <%= org_f.text_field :fiscal_code, class: 'form-control', data: { action: 'keyup->signup#searchCompany', organization_role: organization.role }, placeholder: "Cod unic de inregistrare" %>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <%= org_f.label :name, class: 'col-sm-3 col-form-label' %>
+          <div class="col-sm-9">
+            <%= org_f.text_field :name, class: 'form-control', placeholder: "SC ... SRL" %>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <%= org_f.label :reg_com, class: 'col-sm-3 col-form-label' %>
+          <div class="col-sm-9">
+            <%= org_f.text_field :reg_com, class: 'form-control', placeholder: "J/../..." %>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <%= org_f.label :address, class: 'col-sm-3 col-form-label' %>
+          <div class="col-sm-9">
+            <%= org_f.text_field :address, class: 'form-control', placeholder: "Adresă" %>
+          </div>
+        </div>
+
+        <% if organization.colaborator? %>
+          <div class="row mb-3">
+            <%= org_f.label :contract_number, class: 'col-sm-3 col-form-label' %>
+            <div class="col-sm-9">
+              <%= org_f.text_field :contract_number, class: 'form-control', placeholder: "Număr de Contract" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+    <div class="row mb-3">
+      <%= user_org.label :job_title, class: 'col-sm-3 col-form-label' %>
+      <div class="col-sm-9">
+        <%= user_org.text_field :job_title, class: 'form-control', placeholder: "Job Title" %>
+      </div>
+    </div>
+  <% end %>
+<% end %>

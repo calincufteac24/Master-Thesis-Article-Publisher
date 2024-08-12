@@ -1,0 +1,12 @@
+<%= turbo_frame_tag dom_id(user_permission) do %>
+  <%= form_with(model: [@user, user_permission], local: true) do |form| %>
+  <div class="separator"><h2 class="px-lg-5 px-2">Permisii</h2></div>
+    <div class="mb-3">
+      <%= form.select :permission, UserPermission.permissions.keys.map { |key| [t("users.permissions.#{key}"), key] }, {}, class: 'form-select' %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.submit 'Adaugă permisiune', class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+<% end %>

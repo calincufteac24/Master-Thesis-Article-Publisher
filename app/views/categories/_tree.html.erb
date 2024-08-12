@@ -1,0 +1,21 @@
+<li class="list-group-item">
+  <% if include_ad_type %>
+    <%= category.name %>
+  <% else %>
+    <%= link_to category.name, category %>
+  <% end %>
+
+  <% if include_ad_type && !category.ad_types.empty? %>
+    <ul>
+      <% category.ad_types.each do |ad_type| %>
+        <li><%= link_to ad_type.name, ad_type %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <% if category.children.any?%>
+    <ul class="list-group">
+      <%= render partial: "categories/tree", collection: category.children, as: :category, locals: { depth: depth.next, include_ad_type: include_ad_type } %>
+    </ul>
+  <% end %>
+</li>

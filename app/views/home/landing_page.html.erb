@@ -1,0 +1,56 @@
+<div class="container-fluid p-0 landing-page background-black position-relative bg-custom" data-controller="landing">
+  <div class="landing-title d-none"> Publicator online </div>
+  <div class="landing-subtitle mb-3">
+    Aplicația noastră de publicare cu tehnologia avansată de recunoaștere optică a caracterelor oferă posibilitatea de a publica cu ușurință articole de știri și documente legale. Indiferent dacă digitalizezi materiale tipărite sau extragi text din imagini, platforma noastră partajează conținutul eficient.
+  </div>
+  <div class="landing-buttons mt-5">
+    <div class="text my-2 text-center"> Alătură-te comunității noastre!</div>
+    <div class="d-flex">
+      <div class="p-2 me-lg-3 me-1">
+        <%= link_to "Înregistrare", new_user_registration_path, class: "nav-link" %>
+      </div>
+      <div class="p-2 ms-lg-3 ms-1">
+        <%= link_to "Autentificare", new_user_session_path, class: "nav-link" %>
+      </div>
+
+     <div class="p-2 ms-lg-3 ms-1">
+        <%= link_to "Vezi articole", "#articles", class: "nav-link"%>
+      </div>
+    </div>
+  </div>
+
+  <div class="landing-video">
+    <iframe src="https://player.vimeo.com/video/931756325?h=4c321932ff&background=1&loop=1&&app_id=122963&muted=1&dnt=1"
+            width="100%" height="100%" frameborder="0"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowfullscreen="allowfullscreen"
+            mozallowfullscreen="mozallowfullscreen"
+            msallowfullscreen="msallowfullscreen"
+            oallowfullscreen="oallowfullscreen"
+            webkitallowfullscreen="webkitallowfullscreen"
+            title="#Landing"
+            data-ready="true">
+    </iframe>
+    <div class="position-absolute video-overlay-bg"></div>
+  </div>
+</div>
+
+<div class="container-fluid bg-custom">
+    <div class="container py-5" id="articles">
+      <div class="row">
+      <h2 class="my-4"> Cele mai apreciate articole publicate... </h2>
+        <div class="container">
+          <div class="row">
+            <% Notice.all.revised.with_average_rating.revised.includes(:ad_type, :creator).limit(4).each do |notice| %>
+              <div class="col-lg-6 col-12">
+                <%= render partial: '/notices/notice_content', locals: { notice: notice } %>
+              </div>
+            <% end %>
+          </div>
+          <div class="d-flex justify-content-center my-3">
+            <%= link_to 'Vedeți întreaga listă', notices_path, class: 'btn btn-primary' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

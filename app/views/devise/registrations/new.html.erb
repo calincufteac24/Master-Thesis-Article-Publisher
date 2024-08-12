@@ -1,0 +1,71 @@
+<div class="row">
+  <div class="col-lg-6 offset-lg-3" data-controller="signup" data-signup-url-value="<%= registrations_role_templates_path %>" data-signup-organization-url-value="<%= find_organizations_path %>">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="mt-4">Creare cont</h2>
+      </div>
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { multipart: true }) do |f| %>
+        <div class="card-header border-bottom-0 text-uppercase mb-3">Date autentificare</div>
+
+        <div class="card-body">
+          <div class="row mb-3">
+            <%= f.label :email, class: 'col-sm-3 col-form-label' %>
+            <div class="col-sm-9">
+              <%= f.email_field :email, autofocus: false, class: 'form-control', placeholder: 'Adresă de email' %>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <%= f.label :password, class: 'col-sm-3 col-form-label' %>
+            <div class="col-sm-9">
+              <div class="input-group">
+                <%= f.password_field :password, autocomplete: "off", placeholder: 'Parolă', class: 'form-control', data: { signup_target: 'password_field' } %>
+                <span class="input-group-text" data-action='click->signup#togglePassword'>
+                  <i class="fas fa-eye" id="show_eye"></i>
+                  <i class="fas fa-eye-slash d-none" id="hide_eye"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-header border-bottom-0 text-uppercase mb-3">Profil</div>
+        <div class="card-body">
+          <div class="row mb-3">
+            <label class='col-sm-3 col-form-label pt-0'>Alege rolul tau:</label>
+            <div class="col-sm-9">
+              <% User::PUBLIC_ROLES.each do |role| %>
+                <% next if role == :colaborator %>
+                  <div class='mb-3 form-check'>
+                    <%= f.radio_button :role, role, class: 'form-check-input', data: { action: 'change->signup#changeRole' } %>
+                    <%= f.label :"role_#{role}", t("users.roles.#{role}"), class: 'form-check-label' %>
+                  </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        <div id="signup_information">
+          <% if f.object.role.present? %>
+            <%= render partial: "/devise/registrations/roles/#{f.object.role}", locals: { user: f.object } %>
+          <% end %>
+        </div>
+
+        <div class="card-body">
+          <div class='mb-3 form-check'>
+            <%= f.check_box :accept_terms, class: 'form-check-input', data: { action: 'change->signup#acceptTerms' } %>
+            <%= f.label :accept_terms, class: 'form-check-label' do %>
+              Am citit și sunt de acord cu <%= link_to 'Termenii de utilizare', terms_path, target: :_blank %> și <%= link_to 'Politica de confidențialitate', privacy_path, target: :_blank %>
+            <% end %>
+          </div>
+
+          <div class="row col-8 offset-2">
+            <div class="mb-3 d-grid text-center">
+              <%= f.submit t('users.sign_up_button'), class: "btn btn-primary", disabled: true, data: { signup_target: 'sign_up_button' } %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <%= render "devise/shared/links" %>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<h3>Tip anunț</h3>
+<div class="mb-5">
+  <% if @notice.ad_type.category.parents_name.is_a?(Array) %>
+    <%= @notice.ad_type.category.parents_name.join(' - ') %> - <%= @notice.ad_type.name %>
+  <% else %>
+    <%= @notice.ad_type.category.parents_name %> - <%= @notice.ad_type.name %>
+  <% end %>
+  <hr/>
+  <%= @notice.ad_type.description %>
+</div>
+
+<h3>Previzualizare anunț</h3>
+<%= render partial: 'notices/notice_content', locals: { notice: @notice } %>
+
+<div class="my-5">
+  <% if @notice.observation.present? %>
+  <h3>Note suplimentare</h3>
+  <div class="mb-3">
+    <p><%= @notice.observation %></p>
+  </div>
+  <% end %>
+</div>

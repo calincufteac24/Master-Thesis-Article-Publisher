@@ -1,0 +1,82 @@
+<div class="container">
+  <h1 class="py-3"> Articole de revizuit </h1>
+  <div class="row">
+    <div class="col-lg-6 col-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title"><i class="far fa-newspaper text-primary me-2"></i> Articole</h5>
+          <p class="card-text">Consultați Lista de Articole care necesită revizuire, pentru a fi postate. </p>
+          <%= link_to 'Articole', notices_path(admin: 'unpublished'), class: 'btn btn-primary stretched-link' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container py-lg-5 py-0">
+  <h1 class="py-3">Configurare Redacție</h1>
+  <div class="row row-cols-1 row-cols-md-2 g-4">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Categorii Articole</h5>
+          <p class="card-text">Configurati aici categoriile de bază (ex. Partea a VI - a) și subcategoriile acestora, pe oricâte niveluri de adâncime.</p>
+          <%= link_to 'Categorii', categories_path, class: 'btn btn-primary stretched-link' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Stagii articole</h5>
+          <p class="card-text">Configurați aici stagiile Redacției, toate acele etape prin care un tip de anunț poate trece (ex. Validare, Facturare, Export etc).</p>
+          <%= link_to 'Stagii', stages_path, class: 'btn btn-primary stretched-link' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Asociere Stagii</h5>
+          <p class="card-text">Asociază aici stagiile unui tip de anunț al Redacției, toate acele etape prin care un tip de anunț poate trece (ex. Validare, Facturare, Export etc).</p>
+          <%= link_to 'Asociere stagii', ad_type_stages_path, class: 'btn btn-primary stretched-link' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Tipuri de articole</h5>
+          <p class="card-text">Configurați aici tipurile de articole pe care redacția le pune la dispoziția utilizatorilor pentru completare.</p>
+          <%= link_to 'Tipuri articole', ad_types_path, class: 'btn btn-primary stretched-link' %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-5 mb-5"><hr></div>
+
+  <h1>Audit & Rapoarte</h1>
+  <div class="row row-cols-1 row-cols-md-2 g-4">
+    <div class="col-lg-6 col-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Audit și istoric modificări</h5>
+          <p class="card-text">Vedeți orice modificare s-a efectuate în sistem de către un anumit utilizator, pe o anumită informație, la un moment dat</p>
+          <%= link_to 'Audit', admin_audits_path, class: 'btn btn-primary stretched-link' %>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 col-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title"><i class="far fa-newspaper text-primary me-2"></i> Rapoarte și Grafice</h5>
+          <p class="card-text"> Vă invităm să consultați lista detaliată a rapoartelor lunare, unde veți găsi informații complete și actualizate despre activitățile și performanțele noastre pentru fiecare lună. </p>
+          <%= link_to 'Rapoarte', reports_path, class: 'btn btn-primary stretched-link' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,83 @@
+<div class="row" id="notice_validation_container">
+  <div class="col-lg-8 offset-lg-2">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="mt-4">Validare date anunț</h2>
+        <ul class="simple_wizard ps-0">
+          <li class="wizard_step active">1</li>
+          <li class="wizard_line"></li>
+          <li class="wizard_step active">2</li>
+          <li class="wizard_line"></li>
+          <li class="wizard_step active">3</li>
+        </ul>
+      </div>
+      <div class="card-body">
+
+        <%= render partial: 'preview' %>
+        <% if user_notices_published_this_month(current_user) >= 3 && just_created?(@notice)%>
+          <h3>Date facturare</h3>
+
+          <div class="mb-3">
+            <% if @notice.invoiceable_type == 'User' %>
+              <p>Persoană fizică <strong><%= @notice.invoiceable.name %></strong>
+                <% if @notice.invoiceable.user_personal_information %>
+                  , act de identitate seria
+                  <strong><%= @notice.invoiceable.user_personal_information.personal_series %><%= @notice.invoiceable.user_personal_information.personal_number %></strong></p>
+                <% end %>
+            <% elsif @notice.invoiceable_type == 'Organization' %>
+              <p>Persoană juridică <strong><%= @notice.invoiceable.name %></strong>, cui <strong><%= @notice.invoiceable.fiscal_code %></strong></p>
+            <% end %>
+          </div>
+
+
+          <h3 class="mt-5">Cost anunț</h3>
+          <div class="d-flex">
+
+          </div>
+          <div class="mb-3">
+            <div class="card text-dark bg-light text-center">
+              <div class="card-body">
+                Costul estimat al anunțului este de: <%= @notice.calculate_price %> Lei
+              </div>
+            </div>
+          </div>
+
+
+          <% if @notice.payment_successful && !current_user.admin? && just_created?(@notice) %>
+            <div class="d-flex justify-content-center">
+              <%= link_to 'Plata a fost efectuată cu succes!', '#', class: "btn btn-primary" %>
+            </div>
+          <% else %>
+            <div class="d-flex justify-content-center">
+              <%= link_to 'Plătiți', new_notice_purchase_path(@notice), class: "btn btn-primary" %>
+            </div>
+          <% end %>
+        <% elsif user_notices_published_this_month(current_user) == 2 %>
+          <div class="d-flex justify-content-center my-2">
+            <div class="btn btn-warning"> Sunteți la ultimul articol gratuit </div>
+          </div>
+        <% end %>
+
+
+        <div class="mb-3 row">
+          <div class="col-6">
+            <%= link_to 'Anulează', root_path, class: "btn btn-outline-primary" %>
+            <%= link_to 'Înapoi', [:validate, @notice], class: "btn btn-outline-primary" %>
+          </div>
+
+          <div class="col-6 text-end">
+            <% if user_notices_published_this_month(current_user) >= 3 && !current_user.admin? && just_created?(@notice) %>
+              <% if @notice.payment_successful == true %>
+                <%= link_to 'Trimite', [:create_confirmation, @notice], class: 'btn btn-primary', method: :patch %>
+              <% else %>
+                <%= link_to 'Trimite', '#', class: 'btn btn-primary disabled', onclick: "return false;" %>
+              <% end %>
+            <% else %>
+              <%= link_to 'Trimite', [:create_confirmation, @notice], class: 'btn btn-primary', method: :patch %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

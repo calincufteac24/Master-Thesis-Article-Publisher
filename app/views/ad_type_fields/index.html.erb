@@ -1,0 +1,46 @@
+
+
+
+<div class="row">
+  <div class="col-sm-6">
+    <h1>Ad_type_fields</h1>
+  </div>
+
+  <div class="col-sm-6 text-end">
+  <%= link_to new_ad_type_field_path, class: 'btn btn-primary' do %>
+    Add New Ad type field
+  <% end %>
+  </div>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover bg-white">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Ad type</th>
+        <th>Form field</th>
+        <th>Help text</th>
+        <th>Text before</th>
+        <th>Text after</th>
+        <th>Required</th>
+        <th>Position</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @ad_type_fields.each do |ad_type_field| %>
+        <%= content_tag :tr, id: dom_id(ad_type_field), class: dom_class(ad_type_field) do %>
+          <td><%= link_to ad_type_field.name, ad_type_field %></td>
+          <td><%= link_to ad_type_field.ad_type.name, ad_type_field.ad_type %></td>
+          <td><%= ad_type_field.form_field_type %></td>
+          <td><%= ad_type_field.help_text %></td>
+          <td><%= ad_type_field.text_before %></td>
+          <td><%= ad_type_field.text_after %></td>
+          <td><%= ad_type_field.required %></td>
+          <td><%= ad_type_field.position %></td>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

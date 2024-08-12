@@ -1,0 +1,44 @@
+<%= form_with(model: user, local: true) do |form| %>
+  <div class="mb-3">
+    <%= form.label :first_name, class: 'form-label' %>
+    <%= form.text_field :first_name, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :last_name, class: 'form-label' %>
+    <%= form.text_field :last_name, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :role, class: 'form-label' %>
+    <%= form.select :role,User.roles.keys.map { |role| t("users.roles.#{role}") }, {}, class: 'form-select' %>
+  </div>
+
+  <div class="mb-3">
+    <% if user.persisted? %>
+      <div class="float-end">
+
+        <% if user.pending_approval? %>
+          <%= link_to 'Activează utilizatorul', approve_user_path(user), class: 'btn btn-primary', method: :patch %>
+        <% end %>
+
+        <%= link_to I18n.t('button.destroy'), user, method: :delete, class: "btn btn-danger", data: { confirm: 'Ești sigur?' } %>
+      </div>
+    <% end %>
+
+    <%= form.submit class: 'btn btn-primary' %>
+
+    <% if user.persisted? %>
+      <%= link_to I18n.t('button.cancel'), user, class: "btn btn-outline-primary" %>
+    <% else %>
+      <%= link_to I18n.t('button.cancel'), users_path, class: "btn-outline-primary" %>
+    <% end %>
+  </div>
+<% end %>
+
+
+<%= render 'user_permissions/form', user_permission: @user.user_permissions.build %>
+
+<div id="user_permissions">
+  <%= render @user.user_permissions %>
+</div>

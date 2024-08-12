@@ -1,0 +1,29 @@
+.card{
+  box-shadow: 0 .125rem .25rem rgba(#000, .075);
+  .card-header {
+    color: #008079;
+  }
+}
+
+.col-form-label{
+  color: #5E6E82;
+}
+
+.table-striped {
+  @extend .text-center !optional;
+  th { @extend .fw-normal !optional }
+}
+
+.navbar-brand {
+  font-family: 'Alex Brush', cursive;
+  font-size: 35px;
+}
+
+.card {
+  background-color: white;
+  cursor: pointer;
+}
+
+.shadow:hover {
+  box-shadow: 0 0.5rem 2rem #00807a56 !important;
+}

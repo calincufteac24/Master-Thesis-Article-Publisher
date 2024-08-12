@@ -1,0 +1,56 @@
+<div class="container mt-lg-5 mt-3 p-0">
+  <div class="row">
+    <div class="text-end">
+      <%= link_to new_notice_path, class: 'btn btn-primary' do %>
+        Adaugă un articol
+      <% end %>
+    </div>
+    <div class="">
+      <div class="separator"><h1 class="px-lg-5 px-2 py-4">Articole</h1></div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row jusitfy-content-between">
+      <div class="col-6">
+        <%= form_with(url: notices_path, method: "get", local: true) do |form| %>
+          <div class="input-group">
+            <div class="form-outline">
+              <% prompt_search = params[:search].present? ? params[:search] : 'Caută...' %>
+              <%= form.text_field :search, id: "form1", class: "form-control", placeholder: prompt_search %>
+            </div>
+            <button type="submit" class="btn btn-outline-primary">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="col-3">
+        <%= form_tag(notices_path, method: "get") do %>
+          <%= select_tag 'order_by', options_for_select([ ['Sortează', ''], ['Sortează după Rating', 'rating'], ['Sortează după Dată', 'date']], params[:order_by]), class: 'form-select', onchange: 'this.form.submit();' %>
+        <% end %>
+      </div>
+
+      <div class="col-3">
+        <%= form_tag({ controller: 'notices', action: 'index' }, method: 'get') do %>
+          <% prompt_text = params[:ad_type_id].present? ? AdType.find(params[:ad_type_id]).name : 'Selectează un tip' %>
+          <%= select_tag :ad_type_id, options_for_select([['Toate tipurile', '']] + AdType.all.map{ |ad_type| [ad_type.name, ad_type.id] }), prompt: prompt_text, class: 'form-select', onchange: 'this.form.submit();' %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <% @notices.each do |notice| %>
+        <div class="col-lg-6 col-12">
+          <%= render partial: '/notices/notice_content', locals: { notice: notice } %>
+        </div>
+      <% end %>
+    </div>
+    <div class="d-flex justify-content-center my-3">
+      <% if @pagy.present? %>
+        <%== pagy_bootstrap_nav(@pagy) if @pagy.pages > 1 %>
+      <% end %>
+    </div>
+  </div>
+</div>

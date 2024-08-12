@@ -1,0 +1,7 @@
+<div class="container p-5">
+  <h1>Modifică</h1>
+  <div class="pb-5 px-5">
+    <%= render partial: '/notices/notice_content', locals: { notice: @comment.notice } %>
+    <%= render 'form', comment: @comment, notice: @comment.notice %>
+  </div>
+</div>

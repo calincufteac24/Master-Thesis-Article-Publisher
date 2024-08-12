@@ -1,0 +1,74 @@
+<%= fields_for user do |f| %>
+  <% if user.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h4>
+      <ul>
+        <% user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="card-header border-bottom-0 text-uppercase mb-3"><%= defined?(label_header) ? label_header : 'Date personale' %></div>
+  <div class="card-body">
+    <div class="row mb-3">
+      <%= f.label :first_name, class: 'col-sm-3 col-form-label' %>
+      <div class="col-sm-9">
+        <%= f.text_field :first_name, autofocus: true, class: 'form-control', placeholder: "Prenume" %>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <%= f.label :last_name, class: 'col-sm-3 col-form-label' %>
+      <div class="col-sm-9">
+        <%= f.text_field :last_name, class: 'form-control', placeholder: "Nume" %>
+      </div>
+    </div>
+    <% unless f.object.employee? %>
+      <%= f.fields_for :user_personal_information, user.user_personal_information || user.build_user_personal_information(identity_type: 'personal_id') do |personal_information_f| %>
+        <div class="mb-3">
+          <label class='mb-3 mt-3'>Tip act de identitate</label>
+          <div class='mb-3 form-check'>
+            <%= personal_information_f.radio_button :identity_type, :personal_id, { class: 'form-check-input', data: { action: 'change->signup#changeIdentityType' } } %>
+            <%= personal_information_f.label :identity_type_personal_id, 'Carte de identitate', class: 'form-check-label'%>
+          </div>
+
+          <div class='mb-3 form-check'>
+            <%= personal_information_f.radio_button :identity_type, :passport_id, { class: 'form-check-input', data: { action: 'change->signup#changeIdentityType' } } %>
+            <%= personal_information_f.label :identity_type_passport_id, 'Pașaport', class: 'form-check-label'%>
+          </div>
+        </div>
+
+        <div class="<%= 'd-none' if personal_information_f.object.identity_type != 'personal_id' %>" data-signup-target="personal_id_container">
+          <div class="row mb-3">
+            <%= personal_information_f.label :personal_series, class: 'col-sm-3 col-form-label' %>
+            <div class="col-sm-9">
+              <%= personal_information_f.text_field :personal_series, maxlength: 2, class: 'form-control', placeholder: 'Serie' %>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <%= personal_information_f.label :personal_number, class: 'col-sm-3 col-form-label' %>
+            <div class="col-sm-9">
+              <%= personal_information_f.text_field :personal_number, maxlength: 6, class: 'form-control', placeholder: 'Număr' %>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3 <%= 'd-none' if personal_information_f.object.identity_type != 'passport_id' %>" data-signup-target="passport_id_container">
+          <%= personal_information_f.label :passport_number, class: 'col-sm-3 col-form-label' %>
+          <div class="col-sm-9">
+            <%= personal_information_f.text_field :passport_number, maxlength: 10, class: 'form-control', placeholder: 'Număr Pașaport' %>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <%= personal_information_f.label :photo, class: 'col-sm-3 col-form-label' %>
+          <div class="col-sm-9">
+            <%= personal_information_f.file_field :photo, autofocus: false, class: 'form-control', placeholder: "Photo ID" %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+
+  </div>
+<% end %>

@@ -1,0 +1,24 @@
+<div class="container card bg-white p-3">
+  <div class="page-header">
+    <%= link_to categories_path, class: 'btn btn-secondary' do %>
+      Toate Categoriile
+    <% end %>
+    <%= link_to edit_category_path(@category), class: 'btn btn-primary' do %>
+      Editează
+    <% end %>
+    <h1>Categorie Articol/Anunț</h1>
+  </div>
+
+  <dl class="dl-horizontal">
+    <dt><%= Category.human_attribute_name(:name)%>:</dt>
+    <dd><%= @category.name %></dd>
+    <dt><%= Category.human_attribute_name(:description)%>:</dt>
+    <dd><%= @category.description %></dd>
+    <dt><%= Category.human_attribute_name(:about)%>:</dt>
+    <dd><%= @category.about %></dd>
+    <dt><%= Category.human_attribute_name(:primary)%>:</dt>
+    <dd><%= @category.is_primary %></dd>
+    <dt><%= Category.human_attribute_name(:parent)%>:</dt>
+    <dd><%= @category.parent.nil? ? "-" : @category.parent.name %></dd>
+  </dl>
+</div>

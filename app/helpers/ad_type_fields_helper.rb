@@ -1,0 +1,2 @@
+module AdTypeFieldsHelper
+end

@@ -1,0 +1,76 @@
+<%= link_to notice_path(notice) do %>
+  <div class="card w-auto my-3 shadow notice-card">
+    <% if notice.notice_values.includes(:ad_type_field).where(ad_type_field: { form_field_type: :file }).present? %>
+      <% notice.notice_values.includes(:ad_type_field).where(ad_type_field: { form_field_type: :file }).each do |value| %>
+        <% if value.file.attached? %>
+          <% if value.file.content_type == 'application/pdf' %>
+            <embed src="<%= url_for(value.file) %>#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf" width="800" height="600px" class="card-img-top" />
+          <% elsif value.file.content_type == 'image/tiff' %>
+              <%= image_tag(value.file.variant(resize_to_fit: [500, 400]), class: 'card-img-top') %>
+          <% elsif value.file.variable? %>
+            <%= image_tag(value.file, class: 'card-img-top') %>
+          <% else value.file.previewable? %>
+            <%= image_tag(value.file.preview, class: 'card-img-top') %>
+          <% end %>
+        <% else %>
+          <%= link_to url_for(value.file), target: :_blank do %>
+            <%= image_tag('docs.jpg', class: 'card-img-top') %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% else %>
+      <%= image_tag('docs.jpg', class: 'card-img-top') %>
+    <% end %>
+
+    <div class="card-body position-relative border">
+      <div class="d-flex align-items-center">
+        <p class="star-rating mb-0"><%= star_rating(notice.average_rating) %></p> <p class="text-muted ms-2 fw-bold mt-2 mb-0"> <%= (notice.average_rating) %> </p>
+      </div>
+      <h4 class="card-title my-2 fw-bold"> <%= notice.ad_type.name.truncate(40) %> </h4>
+      <p class="card-subtitle text-uppercase text-muted"> <%= notice.ad_type.description.truncate(40) %> </p>
+      <% notice.notice_values.includes(:ad_type_field).joins(:ad_type_field).where.not(ad_type_field: { form_field_type: :file }).order("ad_type_field.position ASC").each do |value| %>
+        <% if value.ad_type_field.form_field_type == 'text' %>
+          <div class="d-flex py-3 text-field">
+            <div class="px-2 fw-bold text-dark"><%= value.ad_type_field.text_before.truncate(10) %>:</div>
+            <div class="text-dark"><%= value.value.truncate(20) %></div>
+          </div>
+        <% elsif value.ad_type_field.form_field_type == 'date' %>
+          <div class="d-flex my-3 position-absolute date-field">
+            <h5 class="text-primary"><%= value.value %></h5>
+          </div>
+        <% elsif value.ad_type_field.form_field_type == 'time' %>
+          <div class="d-flex my-3 position-absolute time-field">
+            <p class="text-muted"><%= value.value %></p>
+          </div>
+        <% else %>
+        <div class="d-flex my-2">
+          <strong class="px-2 fw-bold text-dark"><%= value.ad_type_field.text_before %>:</strong>
+          <div class="text-dark"><%= value.value.truncate(200) %></div>
+        </div>
+        <% end %>
+      <% end %>
+      <% if notice.creator.nil? %>
+        <h5 class="notice-publisher position-absolute text-primary d-lg-flex d-none">
+          Publicat de: Utilizator șters
+        </h5>
+      <% else %>
+        <h5 class="notice-publisher position-absolute text-primary text-truncate d-lg-flex d-none">
+          Publicat de: <%= notice.creator&.first_name %> <%= notice.creator&.last_name %>
+        </h5>
+        <div class="d-flex d-lg-none notice-publisher position-absolute">
+          <%= user_avatar(notice.creator, size: 28, class: 'user-avatar') %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<% if notice.comments.any? %>
+  <div class="container">
+    <h6 class="">Comentarii</h6>
+    <hr class="text-primary">
+    <% notice.comments.includes(:user).each do |comment| %>
+      <%= render partial: '/comments/comment', locals: { comment: comment } %>
+    <% end %>
+  </div>
+<% end %>

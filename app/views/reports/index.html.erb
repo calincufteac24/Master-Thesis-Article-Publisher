@@ -1,0 +1,63 @@
+<div class="container" data-controller="reports" data-reports-identifier-value='["users_chart", "notices_chart_by_status", "average_ratings_of_notices", "price_earnings"]'>
+
+  <div class="separator"><h1 class="px-lg-5 px-2 py-1">Rapoarte</h1></div>
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="form-group my-2">
+        <label for="date_range">Selectează un interval</label>
+        <input type="text" data-reports-target="dateRange" class="form-select" />
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="separator"><h4 class="px-lg-5 px-2 py-4">Utilizatori înscriși</h4></div>
+      <div class="card bg-white">
+        <div class="chart">
+          <%= area_chart @users_chart, id: 'users_chart' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+      <div class="separator"><h4 class="px-lg-5 px-2 py-4">Status Articole</h4></div>
+      <div class="card bg-white">
+        <div class="chart">
+          <%= pie_chart @notices_chart_by_status, id: 'notices_chart_by_status', donut: true %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="separator"><h4 class="px-lg-5 px-2 py-4">Recenzii date</h4></div>
+      <div class="card bg-white">
+        <div class="chart">
+          <%= column_chart @average_ratings_of_notices.map { |chart|
+              {
+                name: chart.ad_type_name,
+                data: { "#{chart.average_rating}": chart.rating_count },
+              }
+            }, id: 'average_ratings_of_notices' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+      <div class="separator"><h4 class="px-lg-5 px-2 py-4" data-reports-target="sum">Bani încasați: <span class="text-primary"> <%= @price_earnings.sum(&:price) %> RON</span> </h4></div>
+      <div class="card bg-white">
+        <div class="chart">
+          <%= bar_chart @price_earnings_grouped.map { |category_name, earnings|
+            {
+              name: category_name,
+              data: earnings.map { |chart| { "#{chart.notice_title}": chart.price } }.reduce({}, :merge)
+            }
+          }, colors: ["#00FF00", "#097969"], id: 'price_earnings' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

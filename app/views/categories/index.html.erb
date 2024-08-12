@@ -1,0 +1,22 @@
+
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      <h2 class="card-title">Categorii Articole</h2>
+      <div class="row justify-content-between">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 text-end">
+          <%= link_to new_category_path, class: 'btn btn-primary mb-3' do %>
+            + Adaugă Categorie
+          <% end %>
+        </div>
+      </div>
+      <ul class="list-group">
+        <%= render partial: "categories/tree", collection: @categories, as: :category, locals: { depth: 1, include_ad_type: false } %>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+

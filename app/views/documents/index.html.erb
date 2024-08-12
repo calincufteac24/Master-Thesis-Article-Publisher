@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6">
+      <h1>Documente</h1>
+    </div>
+
+    <div class="col-sm-6 text-end">
+    <%= link_to new_document_path, class: 'btn btn-primary' do %>
+      Adaugă un document
+    <% end %>
+    </div>
+  </div>
+
+  <div class="table-responsive mt-4">
+    <table class="table table-striped table-bordered table-hover bg-white">
+      <thead>
+        <tr>
+          <th>Nume</th>
+          <th>Conținut</th>
+          <th>Fișier</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @documents.each do |document| %>
+          <%= content_tag :tr, id: dom_id(document), class: dom_class(document) do %>
+              <td><%= link_to document.name, document %></td>
+              <td><%= truncate strip_tags(document.content) %></td>
+              <td><%= document.files.map(&:filename).join %></td>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

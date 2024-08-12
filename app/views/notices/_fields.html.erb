@@ -1,0 +1,31 @@
+<h3><%= notice.ad_type.description %></h3>
+<%= fields_for notice do |form| %>
+<div class="row" data-controller="noticeValues">
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <div class="row row-cols-lg-auto g-1">
+          <%= form.fields_for :notice_values do |values_form| %>
+            <% if values_form.object.ad_type_field.file? %>
+              </div>
+            <% end %>
+            <%= values_form.hidden_field :ad_type_field_id %>
+            <div class="col-12 pt-1">
+              <%= values_form.object.ad_type_field.text_before %>
+            </div>
+            <div class="col-12">
+              <%= notice_field_html_input(values_form, values_form.object.ad_type_field) %>
+            </div>
+            <div class="col-12 pt-1">
+              <%= values_form.object.ad_type_field.text_after %>
+            </div>
+            <% if values_form.object.ad_type_field.file? %>
+            <div class="row row-cols-lg-auto g-1">
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+</div>

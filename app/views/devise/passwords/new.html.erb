@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="col-lg-6 offset-lg-3">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="mt-4">Resetare parolă</h2>
+      </div>
+      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+        <div class="card-header border-bottom-0 text-uppercase mb-3">Date identificare</div>
+
+        <div class="card-body">
+          <div class="row mb-3">
+            <%= f.label :email, class: 'col-sm-3 col-form-label' %>
+            <div class="col-sm-9">
+              <%= f.email_field :email, autofocus: true, placeholder: 'Adresă email', class: 'form-control' %>
+              <div class='form-text'>Introdu adresa de email si vom trimite un link de resetare parolă.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="row col-8 offset-2">
+            <div class="mb-3 d-grid text-center">
+              <%= f.submit "Trimite link de restare parolă", class: 'btn btn-primary' %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <%= render "devise/shared/links" %>
+  </div>
+</div>

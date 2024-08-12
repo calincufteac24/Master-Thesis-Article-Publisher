@@ -1,0 +1,44 @@
+<div id="new_notice_form" data-controller="notice" data-notice-fields-url-value="<%= fields_notices_path %>">
+  <%= form_with(model: notice, local: true, multipart: true, html: { id: dom_id(notice) }) do |form| %>
+  <%= hidden_field_tag :ocr_text, @ocr_text %>
+    <div class="card-body">
+      <div class="mb-4">
+        <%= form.label :ad_type_id, class: 'h3' %>
+        <%= form.select :ad_type_id, notice_ad_type_select_options(form.object),
+            {include_blank: 'Selectează un tip de anunț'},
+            class: 'form-select', data: { action: 'change->notice#changeFields' } %>
+      </div>
+
+      <div id="field_values_container" class="mb-4">
+        <% if form.object.ad_type.present? %>
+          <%= render partial: "fields", locals: { notice: form.object } %>
+        <% end %>
+      </div>
+
+      <div class="row my-3">
+        <%= form.label 'Descriere', class: 'col-sm-3 col-form-label' %>
+        <div class="col-sm-9">
+          <%= form.rich_text_area :description, class: 'form-control', placeholder: 'Conținutul articolului', style: 'min-height: 150px; text-align: justify;', value: @ocr_text || @notice.description %>
+        </div>
+      </div>
+
+      <div class="row my-3">
+        <%= form.label :observation, class: 'col-sm-3 col-form-label' %>
+        <div class="col-sm-9">
+          <%= form.text_area :observation, class: 'form-control', placeholder: 'Dacă mai aveți ceva de precizat legat de articol.' %>
+        </div>
+      </div>
+
+
+      <div class="mb-3 row">
+        <div class="col-6">
+          <%= link_to 'Anulează', notices_path, class: "btn btn-outline-primary" %>
+        </div>
+        <div class="col-6 text-end">
+          <%= form.submit 'Continuă', class: 'btn btn-primary' %>
+        </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

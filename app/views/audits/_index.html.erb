@@ -1,0 +1,27 @@
+<% if dated_audit.any? %>  
+  <% dated_audit.each do |date, audits| %>
+    <h4 class="timeline__title-with-date">
+      <% if date.today? %>
+        <%= I18n.t("audit.today").capitalize %>
+      <% else %>
+        <%= I18n.localize(date, format: '%A, %b %d') %>
+      <% end %>
+    </h4>
+    <ul class="timeline">
+      <% audits.each do |audit| %>
+        <li class="<%= cycle('', 'timeline-inverted') %>" >
+          <div class="timeline-badge"></div>
+          <div class="timeline-panel">
+            <%= render partial: "/audits/audit", locals: {audit: audit} %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+<% else %>
+  <div class="container text-center">
+    <p class="dashboard-card-text--small">
+      <%= I18n.t("audit.no_activity") %>
+    </p>
+  </div>
+<% end %>

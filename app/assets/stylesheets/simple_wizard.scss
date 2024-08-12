@@ -1,0 +1,27 @@
+$primary: #008079;
+
+.simple_wizard {
+  display: flex;
+  justify-content: center;
+  li{
+    display: inline-block;
+    &.wizard_step {
+      border-radius: 50%;
+      width: 41px;
+      height: 30px;
+      background-color: #B6C1D2;
+      padding: 3px 11px;
+      color: white;
+      &.active {
+        background-color: $primary;
+      }
+    }
+    &.wizard_line {
+      content: "";
+      height: 2px;
+      width:100%;
+      margin-top: 0.8em;
+      background: #B6C1D2;
+    }
+  }
+}

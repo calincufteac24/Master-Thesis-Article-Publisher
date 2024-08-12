@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8">
+      <h1>Stagii asignate pe tipuri de articole/anunțuri</h1>
+    </div>
+
+    <div class="col-sm-4 text-end">
+    <%= link_to new_ad_type_stage_path, class: 'btn btn-primary' do %>
+      Asignează un nou stagiu
+    <% end %>
+    </div>
+  </div>
+
+  <div class="table-responsive mt-4 text-center bg-white">
+    <table class="table table-striped table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>Tip anunț</th>
+          <th>Stagiu</th>
+          <th>Poziție</th>
+          <th>Se generează factură?</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @ad_type_stages.each do |ad_type_stage| %>
+          <%= content_tag :tr, id: dom_id(ad_type_stage), class: dom_class(ad_type_stage) do %>
+            <td><%= link_to ad_type_stage.ad_type.name, ad_type_stage.ad_type %></td>
+            <td><%= link_to ad_type_stage.stage&.name, ad_type_stage.stage %></td>
+            <td><%= ad_type_stage.position %></td>
+            <td><%= ad_type_stage.create_invoice %></td>
+            <td><%= link_to 'Vezi detalii', ad_type_stage %></td>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+<%= form_with(model: ad_type_stage, local: true) do |form| %>
+  <% if ad_type_stage.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(ad_type_stage.errors.count, "error") %> prohibited this ad_type_stage from being saved:</h2>
+
+      <ul>
+      <% ad_type_stage.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :ad_type_id, class: 'form-label' %>
+    <%= form.select :ad_type_id, options_for_select(AdType.all.map{ |a| [a.name, a.id] }), {}, class: 'form-select' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :stage_id, class: 'form-label' %>
+    <%= form.select :stage_id, options_for_select(Stage.all.map{ |s| [s.name, s.id] }), {}, class: 'form-select' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :position, class: 'form-label' %>
+    <%= form.text_field :position, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :create_invoice, class: 'form-label' %>
+    <%= form.check_box :create_invoice %>
+  </div>
+
+  <div class="mb-3">
+    <% if ad_type_stage.persisted? %>
+      <div class="float-end">
+        <%= link_to I18n.t('button.destroy'), ad_type_stage, method: :delete, class: "text-danger", data: { confirm: 'Are you sure?' } %>
+      </div>
+    <% end %>
+
+    <%= form.submit class: 'btn btn-primary' %>
+
+    <% if ad_type_stage.persisted? %>
+      <%= link_to I18n.t('button.cancel'), ad_type_stage, class: "btn btn-link" %>
+    <% else %>
+      <%= link_to I18n.t('button.cancel'), ad_type_stages_path, class: "btn btn-link" %>
+    <% end %>
+  </div>
+<% end %>

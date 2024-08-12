@@ -1,0 +1,2 @@
+<%= turbo_stream.append "user_permissions", partial: "user_permissions/user_permission", locals: { user_permission: @user_permission } %>
+<%= turbo_stream.replace "new_user_permission", partial: "user_permissions/form", locals: { user_permission: UserPermission.new } %>

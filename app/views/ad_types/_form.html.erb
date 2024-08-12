@@ -1,0 +1,49 @@
+<%= form_with(model: ad_type, local: true) do |form| %>
+  <% if ad_type.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(ad_type.errors.count, "error") %> prohibited this ad_type from being saved:</h2>
+
+      <ul>
+      <% ad_type.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :name, class: 'form-label' %>
+    <%= form.text_field :name, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :category, class: 'form-label' %>
+    <%= form.select :category_id, options_for_select(category_options_array, @ad_type ? @ad_type.id : ''), {}, class: 'form-select' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :description, class: 'form-label' %>
+    <%= form.text_area :description, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :about, class: 'form-label' %>
+    <%= form.text_area :about, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <% if ad_type.persisted? %>
+      <div class="float-end">
+        <%= link_to I18n.t('button.destroy'), ad_type, method: :delete, class: "text-danger", data: { confirm: 'Are you sure?' } %>
+      </div>
+    <% end %>
+
+    <%= form.submit class: 'btn btn-primary' %>
+
+    <% if ad_type.persisted? %>
+      <%= link_to I18n.t('button.cancel'), ad_type, class: "btn btn-link" %>
+    <% else %>
+      <%= link_to I18n.t('button.cancel'), ad_types_path, class: "btn btn-link" %>
+    <% end %>
+  </div>
+<% end %>

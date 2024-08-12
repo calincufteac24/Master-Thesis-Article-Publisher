@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="col-lg-6 offset-lg-3" data-controller="signup" data-signup-url-value="<%= registrations_role_templates_path %>" data-signup-organization-url-value="<%= find_organizations_path %>">
+    <div class="card">
+      <h1 class="text-center">Creare Cont</h1>
+
+      <%= form_for(resource, as: resource_name, url: invitation_path(resource_name), html: { method: :put, multipart: true }) do |f| %>
+        <div class="card-header border-bottom-0 text-uppercase mb-3">Date autentificare</div>
+        <div class="card-body">
+          <%= f.hidden_field :invitation_token, readonly: true %>
+
+          <div class="mb-3">
+            <%= f.password_field :password, autocomplete: "off", class: 'form-control', placeholder: 'Parolă' %>
+          </div>
+
+          <div class="mb-3">
+            <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control', placeholder: 'Confirmare Parolă' %>
+          </div>
+        </div>
+        <div id="signup_information">
+          <% if f.object.role.present? %>
+            <%= render partial: "/devise/registrations/roles/#{f.object.role}", locals: { user: f.object } %>
+          <% end %>
+        </div>
+
+        <div class="card-body">
+          <div class='mb-3 form-check'>
+            <%= f.check_box :accept_terms, class: 'form-check-input', data: { action: 'change->signup#acceptTerms' } %>
+            <%= f.label :accept_terms, class: 'form-check-label' do %>
+              Am citit și sunt de acord cu <%= link_to 'Termenii de utilizare', terms_path, target: :_blank %> și <%= link_to 'Politica de confidențialitate', privacy_path, target: :_blank %>
+            <% end %>
+          </div>
+
+          <div class="mb-3 d-grid text-center">
+            <%= f.submit "Creare cont", class: "btn btn-primary btn-lg", disabled: true, data: { signup_target: 'sign_up_button' } %>
+          </div>
+        </div>
+      <% end %>

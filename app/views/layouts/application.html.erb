@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html class="h-100">
+  <head>
+    <%= render 'shared/head' %>
+  </head>
+
+  <body class="d-flex flex-column h-100">
+    <main class="flex-shrink-0">
+      <% unless controller_name == 'home' && action_name == 'landing_page' %>
+        <%= render 'shared/navbar' %>
+      <% end %>
+
+
+      <%= render 'shared/notices' %>
+
+      <div class="<%= action_name == 'landing_page' ? 'container-fluid p-0' : 'container-fluid py-lg-5 py-4' %>">
+        <%= yield %>
+      </div>
+    </main>
+
+    <%= render 'shared/footer' %>
+  </body>
+</html>

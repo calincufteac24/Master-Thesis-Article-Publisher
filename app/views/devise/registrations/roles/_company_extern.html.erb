@@ -1,0 +1,5 @@
+<%= render partial: '/devise/registrations/roles/person_extern', locals: { user: user, label_header: 'Persoana de contact' } %>
+<div id="company_form">
+  <%= render partial: '/devise/registrations/templates/organization_form',
+             locals: { user: user, organization: user.organizations.any? ? user.organizations.first : user.organizations.build(role: :extern), user_organization: user.user_organizations.build } %>
+</div>

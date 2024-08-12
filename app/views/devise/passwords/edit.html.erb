@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="col-lg-6 offset-lg-3">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="mt-4">Schimbare parolă</h2>
+      </div>
+
+      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+        <%= f.hidden_field :reset_password_token %>
+        <div class="card-header border-bottom-0 text-uppercase mb-3">Parolă</div>
+
+        <div class="card-body">
+          <div class="row mb-3">
+            <%= f.label :password, class: 'col-sm-3 col-form-label' %>
+            <div class="col-sm-9">
+              <div class="input-group" data-controller='signup'>
+                <%= f.password_field :password, autocomplete: "off", placeholder: 'Parolă', class: 'form-control', data: { signup_target: 'password_field' } %>
+                <span class="input-group-text" data-action='click->signup#togglePassword'>
+                  <i class="fas fa-eye" id="show_eye"></i>
+                  <i class="fas fa-eye-slash d-none" id="hide_eye"></i>
+                </span>
+              </div>
+              <% if @minimum_password_length %>
+                <div class="form-text"><%= @minimum_password_length %> caractere minimum</div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="row col-8 offset-2">
+            <div class="mb-3 d-grid text-center">
+              <%= f.submit "Schimbă parola", class: 'btn btn-primary' %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <%= render "devise/shared/links" %>
+  </div>
+</div>

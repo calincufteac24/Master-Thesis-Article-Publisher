@@ -1,0 +1,7 @@
+<p>Bună <%= @recipient.name %></p>
+
+<p><%= t('notifications.messages.user_validation',
+      user_name: params[:user_name],
+      user_role: t("users.roles.#{params[:user_role]}")) %></p>
+
+<p><%= link_to 'Verifică utilizatorul', user_url(@user) %></p>

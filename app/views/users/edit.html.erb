@@ -1,0 +1,15 @@
+<div class="container">
+  <%= turbo_frame_tag dom_id(@user) do %>
+    <div class="container">
+      <div class="page-header d-flex justify-content-between pb-4">
+        <%= link_to users_path, class: 'btn btn-secondary', target: :_top do %>
+          Toți utilizatorii
+        <% end %>
+      </div>
+      <div class="separator"><h2 class="px-lg-5 px-2">Editează <%= @user.name %></h2></div>
+    </div>
+    <div class="container">
+      <%= render 'form', user: @user %>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,76 @@
+<div data-controller="noticeTypeField">
+  <%= form_with(model: [@ad_type, ad_type_field], local: true) do |form| %>
+    <% if ad_type_field.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(ad_type_field.errors.count, "error") %> prohibited this ad_type_field from being saved:</h2>
+
+        <ul>
+        <% ad_type_field.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="mb-3">
+      <%= form.label :name, class: 'form-label' %>
+      <%= form.text_field :name, class: 'form-control' %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :ad_type_id, class: 'form-label' %>:<%= form.label @ad_type.name %>
+      <%= form.hidden_field :ad_type_id %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :form_field_type, class: 'form-label' %>
+      <%= form.select :form_field_type, AdTypeField.form_field_types.keys, {}, class: 'form-select', data: { action: 'change->noticeTypeField#addOptionFields' } %>
+    </div>
+
+    <div class="mb-3 <%= "d-none" unless form.object.options? %>" data-noticeTypeField-target="optionField">
+      <%= form.label :option_values, class: 'form-label' %>
+      <%= form.select :option_values, [], {}, class: 'w-100', multiple: true, data: { toggle: 'tags_select2' } %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :help_text, class: 'form-label' %>
+      <%= form.text_field :help_text, class: 'form-control' %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :text_before, class: 'form-label' %>
+      <%= form.text_field :text_before, class: 'form-control' %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :text_after, class: 'form-label' %>
+      <%= form.text_field :text_after, class: 'form-control' %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :required, class: 'form-label' %>
+      <%= form.check_box :required %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :position, class: 'form-label' %>
+      <%= form.number_field :position, class: 'form-control' %>
+    </div>
+
+    <div class="mb-3">
+      <% if ad_type_field.persisted? %>
+        <div class="float-end">
+          <%= link_to I18n.t('button.destroy'), [@ad_type, ad_type_field], method: :delete, class: "text-danger", data: { confirm: 'Are you sure?' } %>
+        </div>
+      <% end %>
+
+      <%= form.submit class: 'btn btn-primary' %>
+
+      <% if ad_type_field.persisted? %>
+        <%= link_to I18n.t('button.cancel'), [@ad_type, ad_type_field], class: "btn btn-link" %>
+      <% else %>
+        <%= link_to I18n.t('button.cancel'), ad_type_ad_type_fields_path(@ad_type), class: "btn btn-link" %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

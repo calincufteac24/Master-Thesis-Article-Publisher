@@ -1,0 +1,61 @@
+@import "font-awesome-sprockets";
+@import "font-awesome";
+// $navbar-default-bg: #312312;
+// $light-orange: #ff8c00;
+// $navbar-default-color: $light-orange;
+/*
+ *= require daterangepicker
+ */
+
+
+
+@import "bootstrap_variables";
+@import "bootstrap";
+@import "bootstrap_overrides";
+@import "user_activity_timeline";
+@import "simple_wizard";
+@import "landing";
+@import "fonts";
+@import "notice";
+@import "reports";
+
+@import "bootstrap-datepicker/dist/css/bootstrap-datepicker.css";
+@import 'select2/dist/css/select2.css';
+@import "./actiontext.scss";
+@import "trix/dist/trix";
+
+
+// Masquerade alert shouldn't have a bottom margin
+body > .alert {
+  margin-bottom: 0;
+}
+
+body {
+  background-color: #f9f5ef !important;
+}
+
+* {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 98%;
+}
+
+.google-login {
+  height: 43px;
+  width: fit-content;
+}
+
+.container, .container-fluid {
+  background-color: #f9f5ef;
+}
+
+.full-screen-height {
+  height: 100vh;
+  padding: 0;
+}
+
+@media(max-screen: 500px) {
+  .google-login {
+    height: 43px;
+    width: 100%;
+  }
+}

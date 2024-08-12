@@ -1,0 +1,12 @@
+<div class="row my-3">
+  <div class="col-6">
+    <%- if controller_name != 'sessions' %>
+      <span class='pe-3'>Ai cont deja?</span> <%= link_to "Log in", new_session_path(resource_name) %><br />
+    <% end %>
+  </div>
+  <div class="col-6 text-end">
+    <%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
+      <%= link_to "Am uitat parola", new_password_path(resource_name) %><br />
+    <% end %>
+  </div>
+</div>

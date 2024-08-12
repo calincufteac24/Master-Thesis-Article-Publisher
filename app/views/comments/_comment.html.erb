@@ -1,0 +1,21 @@
+<article>
+  <% if current_user == comment.notice.creator || current_user == comment.user %>
+    <div class="text-end">
+      <%= link_to edit_notice_comment_path(comment.notice, comment), class: 'text-primary mb-3' do %>
+        <i class="fas fa-pencil-alt"></i>
+      <% end %>
+      <%= link_to notice_comment_path(comment.notice, comment), method: :delete, data: { confirm: 'Ești sigur?' }, class: 'text-danger mb-3' do %>
+        <i class="far fa-trash-alt"></i>
+      <% end %>
+    </div>
+  <% end %>
+  <div class="d-flex justify-content-between">
+    <div class="d-flex">
+      <%= image_tag avatar_path(comment.user, size: 40), height: 30, width: 30, class: "rounded me-2" %>
+      <p> de <%= comment.user.name %> </p>
+    </div>
+    <small class="font-italic"> acum <%= distance_of_time_in_words_to_now(comment.created_at) %> </small>
+  </div>
+  <p class="form-control"> <%= comment.content %> </p>
+</article>
+<hr class="text-primary">

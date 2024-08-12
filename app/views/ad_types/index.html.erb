@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6">
+      <h1>Tipuri articole/anunțuri</h1>
+    </div>
+
+    <div class="col-sm-6 text-end">
+    <%= link_to new_ad_type_path, class: 'btn btn-primary' do %>
+      + Tip nou
+    <% end %>
+    </div>
+  </div>
+
+
+  <%= render partial: "categories/tree", collection: @categories, as: :category, locals: { depth: 1, include_ad_type: true } %>
+</div>

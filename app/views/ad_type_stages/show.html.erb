@@ -1,0 +1,22 @@
+<div class="container card bg-white p-3">
+  <div class="page-header">
+    <%= link_to ad_type_stages_path, class: 'btn btn-default' do %>
+      Toate stagiile
+    <% end %>
+    <%= link_to edit_ad_type_stage_path(@ad_type_stage), class: 'btn btn-primary' do %>
+      Editează
+    <% end %>
+    <h1>Arată stagiu</h1>
+  </div>
+
+  <dl class="dl-horizontal">
+    <dt>Id:</dt>
+    <dd><%= @ad_type_stage.ad_type_id %></dd>
+    <dt>Stagiu:</dt>
+    <dd><%= @ad_type_stage.stage_id %></dd>
+    <dt>Poziție:</dt>
+    <dd><%= @ad_type_stage.position %></dd>
+    <dt>Se crează factură?:</dt>
+    <dd><%= @ad_type_stage.create_invoice %></dd>
+  </dl>
+</div>

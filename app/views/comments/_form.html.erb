@@ -1,0 +1,24 @@
+<div class="card w-auto">
+  <div class="card-body d-flex justify-content-between">
+    <div class="">
+       <%= image_tag avatar_path(current_user, size: 40), height: 30, width: 30, class: "rounded me-2" %>
+        <label for="commentContent" class="form-label">Comentariul tău</label>
+    </div>
+    <% button_text = @comment.present? ? 'Editează' : 'Adaugă' %>
+    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#commentForm_<%= notice.id%>" aria-expanded="false" aria-controls="commentForm">
+      <%= button_text %>
+    </button>
+  </div>
+
+  <div class="collapse p-2" id="commentForm_<%= notice.id %>">
+    <%= form_for(@comment || Comment.new, url: (@comment ? notice_comment_path(notice, @comment) : notice_comments_path(notice)), method: (@comment ? :patch : :post), class: 'p-3') do |form| %>
+      <%= hidden_field_tag 'comment[notice_id]', notice.id %>
+      <%= csrf_meta_tags %>
+
+      <div class="mb-3">
+        <%= form.text_area :content, class: 'form-control' %>
+      </div>
+      <%= form.submit (@comment ? 'Actualizează' : 'Postează'), class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>

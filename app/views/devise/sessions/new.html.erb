@@ -1,0 +1,71 @@
+<div class="row">
+  <div class="col-lg-6 offset-lg-3">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="mt-4">Autentificare</h2>
+      </div>
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <div class="card-header border-bottom-0 text-uppercase mb-3">Date autentificare</div>
+        <div class="card-body pb-0">
+          <div class="row mb-3">
+            <%= f.label :email, class: 'col-sm-3 col-form-label' %>
+            <div class="col-sm-9">
+              <%= f.email_field :email, autofocus: true, placeholder: 'Adresă email', class: 'form-control' %>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <%= f.label :password, class: 'col-sm-3 col-form-label' %>
+            <div class="col-sm-9">
+              <div class="input-group" data-controller='signup'>
+                <%= f.password_field :password, autocomplete: "off", placeholder: 'Parolă', class: 'form-control', data: { signup_target: 'password_field' } %>
+                <span class="input-group-text" data-action='click->signup#togglePassword'>
+                  <i class="fas fa-eye" id="show_eye"></i>
+                  <i class="fas fa-eye-slash d-none" id="hide_eye"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <% if devise_mapping.rememberable? -%>
+            <div class="row mb-3">
+              <div class="col-sm-9 offset-sm-3">
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <%= f.check_box :remember_me, class: "form-check-input" %>
+                    Ține-mă minte
+                  </label>
+                </div>
+              </div>
+            </div>
+          <% end -%>
+
+          <div class="row col-8 offset-2">
+            <div class="mb-3 text-center">
+              <%= f.submit "Conectează-te ", class: "btn btn-primary px-5" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="row col-8 offset-2 text-center">
+        <%- if devise_mapping.omniauthable? %>
+          <%- resource_class.omniauth_providers.each do |provider| %>
+            <%= form_for "Login",
+              url: omniauth_authorize_path(resource_name, provider),
+              method: :post,
+              data: {turbo: "false"} do |f| %>
+                <div class="mb-3 text-center mx-2">
+                  <%= f.submit "Login", type: "image", src: image_path("btn_google_sign_in.png"), class: "google-login" %>
+                </div>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <%= render "devise/shared/links" %>
+    </div>
+  </div>
+</div>

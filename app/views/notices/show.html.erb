@@ -1,0 +1,120 @@
+
+<div class="container">
+  <div class="d-flex justify-content-lg-end justify-content-between">
+    <% if user_signed_in? && @notice.status == 'revised' %>
+      <%= render partial:'ratings/form', locals: { notice: @notice } %>
+    <% else %>
+      <div class="btn btn-secondary btn-disabled me-3"> <%= t("status.#{@notice.status}") %> </div>
+    <% end %>
+    <% if current_user == @notice.creator || current_user.admin %>
+      <div class="text-end"> <%= link_to 'Editează', edit_notice_url(@notice), class: 'btn btn-outline-primary me-3' %> </div>
+      <div class="text-end"> <%= link_to 'Șterge', notice_path(@notice), method: :delete, data: { confirm: 'Ești sigur?' }, class: 'btn btn-outline-danger me-3' %> </div>
+    <% end %>
+
+    <% if current_user.admin == true && @notice.status != 'revised' %>
+      <div class="text-end">
+        <% if user_notices_published_this_month(current_user) >= 3 && @notice.payment_successful %>
+          <%= link_to 'Plata nu a fost efectuată', '#', class: 'btn btn-primary disabled' %>
+        <% else %>
+          <%= link_to 'Publică', publish_notice_path(@notice), method: :patch, class: 'btn btn-primary' %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="d-lg-flex my-2 justify-content-between align-items-center">
+    <div class="text-start">
+      <h2 class="card-title fw-bold"> <%= @notice.ad_type.name %> </h2>
+      <div class="d-flex align-items-center">
+        <p class="star-rating"><%= star_rating(@notice.average_rating) %></p> <p class="text-muted ms-2 fw-bold mt-2"> <%= (@notice.average_rating) %> </p>
+      </div>
+      <p class="card-subtitle text-uppercase text-muted"> <%= @notice.ad_type.description %> </p>
+    </div>
+    <h4 class="notice-publisher mt-4 text-primary">
+      <% if @notice.creator.nil? %>
+        Publicat de: Utilizator șters
+      <% else %>
+        Publicat de: <%= @notice.creator&.first_name %> <%= @notice.creator&.last_name %>
+      <% end %>
+    </h4>
+  </div>
+  <div class="separator"><h2 class="px-lg-5 px-2 py-2">Conținut anunț</h2></div>
+  <div class="row justify-content-between">
+    <div class="col-lg-6 col-12">
+      <h4 class="my-2"> Note suplimentare </h4>
+        <%= @notice.observation %>
+    </div>
+    <div class="col-lg-4 col-12">
+      <h4 class="my-2"> Alte detalii </h4>
+      <% @notice.notice_values.includes(:ad_type_field).joins(:ad_type_field).where.not(ad_type_field: { form_field_type: :file }).order("ad_type_field.position ASC").each do |value| %>
+        <% if value.ad_type_field.form_field_type == 'text' %>
+          <div class="d-flex py-3">
+            <div class="text-dark"><%= value.value.truncate(200) %></div>
+          </div>
+        <% elsif value.ad_type_field.form_field_type == 'date' %>
+          <div class="d-flex my-3">
+            <h5 class="pe-2 fw-bold text-dark"><%= value.ad_type_field.text_before %>:</h5>
+            <h5 class="text-primary"><%= value.value %></h5>
+          </div>
+        <% elsif value.ad_type_field.form_field_type == 'time' %>
+          <div class="d-flex my-3">
+            <h5 class="pe-2 fw-bold text-dark"><%= value.ad_type_field.text_before %>:</h5>
+            <h5 class="text-primary"><%= value.value %></h5>
+          </div>
+        <% else %>
+        <div class="d-flex my-2">
+          <h5 class="pe-2 fw-bold text-dark"><%= value.ad_type_field.text_before %>:</h5>
+          <h5 class="text-primary"><%= value.value.truncate(200) %></h5>
+        </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="separator"><h2 class="px-lg-5 px-2 py-4">Fișiere</h2></div>
+    <% if @notice.notice_values.includes(:ad_type_field).where(ad_type_field: { form_field_type: :file }).present? %>
+      <% @notice.notice_values.includes(:ad_type_field).where(ad_type_field: { form_field_type: :file }).each do |value| %>
+        <div class="col-lg-6 text-center">
+          <% if value.file.attached? %>
+            <% if value.file.content_type == 'application/pdf' %>
+              <embed src="<%= url_for(value.file) %>#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf" width="800" height="600px" class="show-notice-img"/>
+            <% elsif value.file.variable? %>
+              <%= link_to url_for(value.file) do %>
+                <%= image_tag(value.file.variant(resize_to_fit: [600, 600]), class:'show-notice-img') %>
+              <% end %>
+            <% else value.file.previewable? %>
+              <%= image_tag(value.file.preview, class: 'show-notice-img') %>
+            <% end %>
+          <% else %>
+            <%= link_to url_for(value.file), target: :_blank do %>
+              <%= image_tag('docs.jpg', class: 'show-notice-img') %>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="col-lg-6 col-12">
+        <%= image_tag('docs.jpg', class: 'show-notice-img') %>
+      </div>
+    <% end %>
+  </div>
+  <div class="row">
+    <div class="separator"><h2 class="px-lg-5 px-2 py-4">Descriere</h2></div>
+    <div class="col-12">
+      <div class="mb-3">
+        <p><%= @notice.description %></p>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="separator"><h2 class="px-lg-5 px-2 py-4">Comentarii</h2></div>
+    <div class="col-12">
+      <div class="mb-3">
+        <%= render @notice.comments.includes(:user) %>
+      </div>
+       <% if user_signed_in? %>
+        <%= render partial:'comments/form', locals: { notice: @notice } %>
+      <% end %>
+    </div>
+  </div>
+</div>

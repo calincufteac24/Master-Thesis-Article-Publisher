@@ -1,0 +1,63 @@
+<div class="container py-lg-5 py-0">
+  <div class="row">
+    <% if current_user.permission?(:can_create_publishing) %>
+      <div class="col-lg-6 col-12 mt-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"> <i class="fas fa-file-alt text-primary me-2"></i> Documente</h5>
+            <p class="card-text">Documentele legale, incluzând legile, regulamentele și deciziile judecătorești, reprezintă fundamentul sistemului juridic al unei societăți. Aceste documente stabilesc drepturile, obligațiile și responsabilitățile individuale și instituționale, contribuind la menținerea ordinii și justiției în comunitate. </p>
+            <%= link_to 'Documente', documents_path, class: 'btn btn-primary stretched-link' %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <% if current_user.permission?(:can_validate_external_users) %>
+      <div class="col-lg-6 col-12 mt-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><i class="fas fa-users text-primary me-2"></i> Utilizatori</h5>
+            <p class="card-text">Explorați lista completă a utilizatorilor noștri pentru a conecta și colabora cu alți membri ai comunității noastre. Găsiți persoane cu interese similare, descoperiți experți în domenii specifice și creați legături valoroase în cadrul platformei noastre interactive.</p>
+            <%= link_to 'Utilizatori', users_path, class: 'btn btn-primary stretched-link' %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <% if current_user.permission?(:can_validate_ad) %>
+        <div class="col-lg-6 col-12 mt-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title"><i class="fas fa-plus-circle text-primary me-2"></i> Crează un articol</h5>
+              <p class="card-text">Utilizați funcția 'Creează un Anunț' pentru a aduce în atenția comunității aspecte legislative esențiale. Prin intermediul acestei secțiuni, puteți transmite informații relevante, propune inițiative sau discuta modificări legislative pentru un impact pozitiv în societate.</p>
+              <%= link_to 'Crează anunț', new_notice_path, class: 'btn btn-primary stretched-link' %>
+            </div>
+          </div>
+        </div>
+    <% end %>
+
+    <div class="col-lg-6 col-12 mt-3">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title"><i class="far fa-newspaper text-primary me-2"></i> Articole</h5>
+          <p class="card-text">Consultați Lista de Articole pentru a fi mereu la curent cu cele mai recente informații legislative și evenimente importante. Aici veți găsi o gamă diversă de anunțuri referitoare la schimbările legale, acțiunile comunitare și oportunități de implicare. </p>
+          <%= link_to 'Articole', notices_path, class: 'btn btn-primary stretched-link' %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <hr class="my-5">
+  <div class="row">
+    <h3 class="my-3"> Cele mai apreciate articole publicate... </h3>
+    <div class="container">
+      <div class="row">
+        <% Notice.all.revised.with_average_rating.revised.includes(:ad_type, :creator).limit(4).each do |notice| %>
+          <div class="col-lg-6 col-12">
+            <%= render partial: '/notices/notice_content', locals: { notice: notice } %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

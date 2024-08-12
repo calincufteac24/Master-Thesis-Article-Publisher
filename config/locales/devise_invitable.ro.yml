@@ -1,0 +1,31 @@
+en:
+  devise:
+    failure:
+      invited: "O invitație este in așteptare, acceptă pentru a continua."
+    invitations:
+      send_instructions: "Un email de invitație a fost trimis către %{email}."
+      invitation_token_invalid: "Linkul de invitație nu este valid!"
+      updated: "Parola a fost setată. Ești logat in sistem."
+      updated_not_active: "Parola a fost setată."
+      no_invitations_remaining: "Nu mai sunt invitații disponibile"
+      invitation_removed: "Invitația nu mai există."
+      new:
+        header: "Invită"
+        submit_button: "Trimite invitație"
+      edit:
+        header: "Seatează-ți parola"
+        submit_button: "Salvează"
+    mailer:
+      invitation_instructions:
+        subject: "Instrucțiuni de invitatie"
+        hello: "Bună %{email}"
+        someone_invited_you: "Ai fost invitat la %{url}, poți accepta folosind link-ul de mai jos."
+        accept: "Acceptă invitație"
+        accept_until: "Invitația va expira la %{due_date}."
+        ignore: "Dacă nu dorești sa accepți ignoă acest email. Contul nu va fi creat până nu accepți folosind link-ul."
+  time:
+    formats:
+      devise:
+        mailer:
+          invitation_instructions:
+            accept_until_format: "%B %d, %Y %I:%M %p"

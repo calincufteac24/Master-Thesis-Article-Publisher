@@ -1,0 +1,6 @@
+<div class="dropdown-item">
+  <div class="d-flex">
+    <%= image_tag avatar_path(User.find_by(id: notification.params[:user_id]), size: 40), height: 30, width: 30, class: "rounded me-2" %>
+    <%= link_to notification.message, notification.url %>
+  </div>
+</div>

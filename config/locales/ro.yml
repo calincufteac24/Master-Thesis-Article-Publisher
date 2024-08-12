@@ -1,0 +1,228 @@
+ro:
+  devise:
+    invitations:
+      user:
+        send_instructions: "Un email de invitație a fost trimis către %{email}!"
+  users:
+    status:
+      approved: 'Aprobat'
+      pending_approval: 'În așteptare'
+    sign_up_button: 'Creare cont'
+    permissions:
+      can_view_users: 'Poate vedea lista de utilizatori'
+      can_delete_users: 'Poate să șteargă lista de utilizatori'
+      can_validate_ad: 'Poate crea articole'
+      can_create_publishing: 'Poate creea documente'
+      can_update_publishing: 'Poate actualiza documente'
+      can_delete_publishing: 'Poate șterge documente'
+      can_validate_external_users: 'Poate aproba utilizatori noi'
+      can_create_stage: 'Poate creea stagii'
+      can_update_stage: 'Poate actualiza stagii'
+      can_delete_stage: 'Poate șterge stagii'
+      can_create_add_type: 'Poate creea tipuri de articole'
+      can_update_add_type: 'Poate actualiza tipuri de articole'
+      can_delete_add_type: 'Poate șterge tipuri de articole'
+    roles:
+      person_extern: 'Persoană fizică'
+      company_extern: 'Persoană juridică'
+      orc: 'Angajat'
+      colaborator: 'Colaborator extern'
+      employee: 'Angajat'
+  audit:
+    actions:
+      create_html: "%{model} %{url} a fost creat %{by}"
+      update_html: "%{model} %{url} a fost modificat %{by}"
+      destroy_html: "%{model} %{url} a fost șters %{by}"
+    by: "de către %{user_name}"
+    today: "Astăzi"
+    no_activity: "Activitatea utilizatorilor de backoffice va fi afișată aici"
+  notifications:
+    messages:
+      user_validation: "%{user_name} s-a înregistrat ca %{user_role} și are nevoie de validare."
+      notice_validation: "%{user_name} a creat un articol %{notice} și are nevoie de validare."
+      update_validation: "%{user_name} a modificat un articol %{notice} și are nevoie de validare."
+      comment_validation: "%{user_name} a adăugat un comentariu la articolul %{notice}."
+  articulated_model_names:
+    users:
+      one: Utilizatorul
+      other: Utilizatorii
+    organizations:
+      one: Compania
+      other: Companiile
+    notices:
+      one: Anunțul
+      other: Anunțurile
+  some_model_names:
+    users:
+      one: Un utilizator
+      other: Utilizatorii
+    organizations:
+      one: O companie
+      other: Companiile
+    notices:
+      one: Anunțul
+      other: Anunțurile
+  activerecord:
+    models:
+      user:
+        one: Utilizator
+        other: Utilizatori
+      notice:
+        one: Anunț
+        other: Anunțuri
+      user_personal_information: Informații personale
+      organization: Companie
+      ad_type: 'Tip Anunț'
+      ad_type_field: 'Câmp Anunț'
+      stage: Stagiu
+      category: Categorie
+    attributes:
+      user:
+        name: "Prenume"
+        last_name: "Nume"
+        name: "Nume"
+        email: "Email"
+        password: "Parolă"
+        password_confirmation: "Confirmă parola"
+        county: "Județul din care faci parte"
+        job_title: "Funcția"
+      user_personal_information:
+        personal_series: 'Serie Act identitate'
+        personal_number: 'Număr Act identitate'
+        passport_number: 'Număr pașaport'
+        photo: 'Urcă copie Act de identitate'
+      organization:
+        name: Nume Companie
+        fiscal_code: cui
+        reg_com: 'Număr de Înregistrare la Registrul Comerțului'
+        address: 'Adresă'
+        contract_number: 'Număr de Contract cu Monitorul Oficial'
+      ad_type_field:
+        name: Nume
+        form_field_type: 'Tip câmp în formular'
+        help_text: 'Text ajutător'
+        text_before: 'Text predefinit înainte de câmp'
+        text_after: 'Text predefinit după de câmp'
+        required: 'Obligatoriu de completat'
+        position: 'Poziție'
+      ad_type:
+        name: Nume
+        description: Descriere
+        about: 'Mai multe informații'
+      stage:
+        name: Nume
+        description: Descriere
+        about: 'Mai multe informații'
+        position: Poziție
+      category:
+        name: Nume
+        description: Descriere
+        about: 'Mai multe informații'
+        primary: 'Categorie primară'
+        parent: 'Aparține de'
+      notice:
+        ad_type_id: "Tip anunț"
+        observation: 'Note suplimentare anunț'
+    errors:
+      models:
+        notice:
+          attributes:
+            ad_type_id:
+              required: "Selecția unui tip de anunț este obligatoriu"
+        notice_value:
+          attributes:
+            value:
+              presence: 'obligatoriu de completat'
+              inclusion: 'nu face parte din opțiunile prezentate'
+              invalid: 'valoarea este invalidă'
+  button:
+    cancel: Anulează
+    destroy: Șterge
+  status:
+    sent: 'Trimis'
+    draft: 'Draft'
+    revised: 'Revizuit'
+  audits:
+    name: 'Audit'
+    details: 'Detalii'
+    view: 'Arată'
+    audit_details: 'Detalii audit'
+    from: 'De la'
+    to : 'la'
+    header_columns:
+      id: 'ID'
+      created_at: 'Creat la'
+      performed_by: 'De către'
+      entity: 'Entitate'
+      action: 'Acțiune'
+      details: 'Detalii'
+    entity_types:
+      User: 'Utilizatori'
+      Member: 'Membri'
+      Category: 'Categorii'
+      Document: 'Documente'
+      AdType: 'Tip anunț'
+      AdTypeField: 'Câmpuri pentru tipurilor de anunțuri'
+      Notice: 'Anunț/Articol'
+      NotificationBundle: 'Notificare'
+      CaseUpdate: 'Actualizări cazuri'
+    action_types:
+      create: 'Creare'
+      update: 'Modificare'
+      destroy: 'Ștergere'
+    audited_changes:
+      sign_in_count: 'Număr autentificări'
+      last_sign_in_at: 'Ultima autentificare'
+      current_sign_in_at: 'Autentificare curentă'
+      remember_created_at: 'Dată creată reținută'
+      state: 'Stare'
+      user_id: 'Utilizator'
+      description: 'Descriere'
+      address: 'Adresă'
+      longitude: 'Longitudine'
+      latitude: 'Latitude'
+      county_key: 'Identificator județ'
+      notifiable_type: 'Obiectul notificării'
+      bundle_type: 'Tipul de date'
+      notifiable_id: 'Id obiect'
+      note: 'Notă'
+      creator_id: 'Id-ul creatorului'
+      from_date: 'De la data'
+      to_date: 'La data'
+      data_id: 'Id'
+      main: 'Principal'
+      taskable_type: 'Sarcină asignată la'
+      title: 'Titlu'
+      taskable_id: 'Id-ul sarcinii'
+      due_datetime: 'Valabil până la'
+      ticketable_id: 'Id'
+      ticketable_type: 'Tipul de date'
+      ticket_type: 'Tipul eveniment'
+      date_and_time: 'Dată și oră'
+      first_name: 'Prenume'
+      last_name: 'Nume'
+      organisation_id: 'Organizație'
+      role: 'Rol'
+      mobile_phone: 'Telefon'
+      mobile_phone_verification_code: 'Cod de verificare'
+      activation_status: 'Status activare'
+      invitations_count: 'Număr invitații'
+      confirmation_sent_at: 'Confirmare trimisă la'
+      encrypted_password: 'Parolă criptată'
+      confirmation_token: 'Token de confirmare'
+      current_sign_in_ip: 'Ip curent'
+      last_sign_in_ip: 'Ultimul ip'
+      feedable_type: 'Tip avertizare'
+      feedable_id: 'Id'
+      name: 'Nume'
+      input_type: 'Tipul input-ului'
+      input_type_value: 'Valoarea input-ului'
+      location: 'Locație'
+      start_at: 'Început la'
+    audit_values:
+      created: 'Creat'
+      sent: 'Trimis'
+      draft: 'Draft'
+      Feed: 'Avertizare'
+      saved: 'Salvat'
+      prepared: 'Pregătit'
